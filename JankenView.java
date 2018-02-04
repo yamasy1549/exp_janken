@@ -2,26 +2,34 @@ import javax.swing.*;
 import java.awt.event.*;
 
 class JankenView extends JFrame implements ActionListener {
-    public static void main(String args[]) {
-        JankenView test = new JankenView();
-
-        test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        test.setVisible(true);
-    }
+    JTextArea textarea = new JTextArea("", 1, 10);
 
     JankenView() {
-        setBounds(10, 10, 300, 200);
+        setBounds(100, 100, 300, 200);
 
-        JButton btn = new JButton("Start");
-        btn.addActionListener(this);
+        textarea.requestFocus();
 
-        JPanel p = new JPanel();
-        p.add(btn);
+        JButton button = new JButton("Start");
+        button.addActionListener(this);
 
-        getContentPane().add(p);
+        JPanel panel = new JPanel();
+        panel.add(textarea);
+        panel.add(button);
+
+        getContentPane().add(panel);
     }
 
-    public void actionPerformed(ActionEvent e){
-        new Janken("192.168.1.3", "9999", "user1");
+    public void actionPerformed(ActionEvent e) {
+        String name = textarea.getText();
+        if(name != "") {
+            new Janken("192.168.1.3", "9999", name);
+        }
+    }
+
+    public static void main(String args[]) {
+        JankenView view = new JankenView();
+
+        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        view.setVisible(true);
     }
 }
