@@ -3,12 +3,13 @@ import java.awt.event.*;
 import static original.Constants.*;
 
 class JankenView extends JFrame {
-    String name;
+    Player player;
     JTextArea logArea = new JTextArea("", 6, 10);
     JTextArea namearea = new JTextArea("", 1, 10);
 
     JankenView() {
-        name = JOptionPane.showInputDialog(this, "Input your name");
+        String name = JOptionPane.showInputDialog(this, "Input your name");
+        player = new Player(name);
 
         // 名前表示
         JLabel nameArea = new JLabel("Hello, " + name + "!");
@@ -39,7 +40,7 @@ class JankenView extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String clickedHand = e.getActionCommand();
             Hand hand = Hand.valueOf(clickedHand);
-            new Janken("192.168.1.3", JankenServerPort, name, hand, logArea);
+            new Janken("192.168.1.3", JankenServerPort, player, hand, logArea);
         }
     }
 
