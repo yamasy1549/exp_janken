@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import static original.Constants.*;
 
 class Game implements Runnable {
   Socket sock[] = new Socket[2];
@@ -14,30 +15,23 @@ class Game implements Runnable {
     this.sock[1] = sock1;
   }
 
-  public int judge(int hand1, int hand2) {
+  public Result judge(Hand hand1, Hand hand2) {
       // 主体はhand1のPlayer
-      // 0:勝ち 1:負け 2:引き分け
-      // 0:グー 1:チョキ 2:パー
-
-      if(hand1 > 2 || hand2 > 2) System.exit(1);
 
       if(hand1 == hand2) {
-          return 2;
-      } else if(hand1 == 0) {
-          return (hand2 == 1) ?  0 : 1;
-      } else if(hand1 == 1) {
-          return (hand2 == 2) ?  0 : 1;
+          return Result.DRAW;
+      } else if(hand1 == Hand.ROCK) {
+          return (hand2 == Hand.SCISSORS) ? Result.WIN : Result.LOSE;
+      } else if(hand1 == Hand.SCISSORS) {
+          return (hand2 == Hand.PAPER) ? Result.WIN : Result.LOSE;
       } else {
-          return (hand2 == 0) ?  0 : 1;
+          return (hand2 == Hand.ROCK) ? Result.WIN : Result.LOSE;
       }
   }
 
-  static String recToStr(String name, int[] game){
+  static String recToStr(String name, Hand hand){
       String s = (name + "        ").substring(0,8);
-      int i;
-      for(i=0; i<20; i++) {
-          s = s + game[i];
-      }
+      s = s + hand.toString();
       return s + "\n";
   }
 
@@ -54,33 +48,27 @@ class Game implements Runnable {
             outs[i].println(names[1-i]);
         }
         String[] s = new String[2];
-        int[][] gameRec = new int[2][20];
-        gameLoop: for(j=0; j<20; j++) {
-            for(i=0; i<2; i++) {
-                if((s[i] = ins[i].readLine()) == null) {
-                    break gameLoop;
-                }
-                gameRec[i][j] = Integer.parseInt(s[i]);
+        Hand[] gameRec = new Hand[2];
+
+        for(i=0; i<2; i++) {
+            if((s[i] = ins[i].readLine()) == null) {
+                break;
             }
-            for(i=0; i<2; i++){
-                outs[i].println(gameRec[1-i][j]);
-            }
+            gameRec[i] = Hand.valueOf(s[i]);
         }
-        if(j == 20) {
-            String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
-            for(i=0; i<20; i++) {
-                System.out.println(judge(gameRec[0][i], gameRec[1][i]));
-            }
-            for(i=0; i<2; i++) {
-                outs[i].println(str);
-            }
-            js.println(str);
-        } else {
-            for(i=0; i<2; i++) {
-                outs[i].println("プログラムが途中で中断しました");
-            }
-            js.println("プログラムが途中で中断しました");
+        for(i=0; i<2; i++){
+            outs[i].println(gameRec[1-i]);
         }
+
+        String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
+        for(i=0; i<2; i++) {
+            outs[i].println(str);
+
+            Result result = (i == 0) ? judge(gameRec[0], gameRec[1]) : judge(gameRec[1], gameRec[0]);
+            outs[i].println(result);
+        }
+        js.println(str);
+
         sock[0].close();
         sock[1].close();
     } catch(IOException e) {
