@@ -6,23 +6,32 @@ import java.net.*;
 // java Janken ホスト名 ポート番号 ユーザー名
 
 class Janken {
+    Janken(String hostname, String port, String name) {
+        Player player = new Player(name);
+
+        try {
+            Socket sock = new Socket(hostname, Integer.parseInt(port));
+            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-8"));
+            PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+            out.println(player.name);
+            janken(in, out);
+        } catch(IOException ioe) {
+            System.out.println(ioe);
+        }
+    }
+
     static void janken(BufferedReader in, PrintWriter out) throws IOException {
         Random random = new Random();
         String s = in.readLine();
         System.out.println("対戦相手：" + s);
-        int myHands[] = new int[20];
-        int opHands[] = new int[20];
 
-        for(int i=0; i<20; i++) {
-            int myHand = random.nextInt(3);
-            out.println(myHand);
-            if((s = in.readLine()) == null) {
-                System.exit(1);
-            }
-            int opHand = Integer.parseInt(s);
-            myHands[i] = myHand;
-            opHands[i] = opHand;
+        int myHand = random.nextInt(3);
+        out.println(myHand);
+        if((s = in.readLine()) == null) {
+            System.exit(1);
         }
+        int opHand = Integer.parseInt(s);
+
         while((s = in.readLine()) != null) {
             System.out.println(s);
         }

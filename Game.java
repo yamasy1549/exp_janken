@@ -32,12 +32,9 @@ class Game implements Runnable {
       }
   }
 
-  static String recToStr(String name, int[] game){
+  static String recToStr(String name, int game){
       String s = (name + "        ").substring(0,8);
-      int i;
-      for(i=0; i<20; i++) {
-          s = s + game[i];
-      }
+      s = s + game;
       return s + "\n";
   }
 
@@ -54,33 +51,34 @@ class Game implements Runnable {
             outs[i].println(names[1-i]);
         }
         String[] s = new String[2];
-        int[][] gameRec = new int[2][20];
-        gameLoop: for(j=0; j<20; j++) {
-            for(i=0; i<2; i++) {
-                if((s[i] = ins[i].readLine()) == null) {
-                    break gameLoop;
-                }
-                gameRec[i][j] = Integer.parseInt(s[i]);
+        int[] gameRec = new int[2];
+
+        for(i=0; i<2; i++) {
+            if((s[i] = ins[i].readLine()) == null) {
+                break;
             }
-            for(i=0; i<2; i++){
-                outs[i].println(gameRec[1-i][j]);
+            gameRec[i] = Integer.parseInt(s[i]);
+        }
+        for(i=0; i<2; i++){
+            outs[i].println(gameRec[1-i]);
+        }
+
+        String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
+        for(i=0; i<2; i++) {
+            outs[i].println(str);
+
+            int result = (i == 0) ? judge(gameRec[0], gameRec[1]) : judge(gameRec[1], gameRec[0]);
+
+            if(result == 0) {
+                outs[i].println("勝ち");
+            } else if(result == 1) {
+                outs[i].println("負け");
+            } else {
+                outs[i].println("引き分け");
             }
         }
-        if(j == 20) {
-            String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
-            for(i=0; i<20; i++) {
-                System.out.println(judge(gameRec[0][i], gameRec[1][i]));
-            }
-            for(i=0; i<2; i++) {
-                outs[i].println(str);
-            }
-            js.println(str);
-        } else {
-            for(i=0; i<2; i++) {
-                outs[i].println("プログラムが途中で中断しました");
-            }
-            js.println("プログラムが途中で中断しました");
-        }
+        js.println(str);
+
         sock[0].close();
         sock[1].close();
     } catch(IOException e) {
