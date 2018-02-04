@@ -14,38 +14,32 @@ class Game implements Runnable {
     this.sock[1] = sock1;
   }
 
-/*
- *   public void judge(Player player1, Player player2) {
- *       int hand1 = player1.getPlayerHand();
- *       int hand2 = player2.getPlayerHand();
- *       String winner = new String[]
- * 
- *       //ゴキブリ=1, 人=2, 殺虫剤=3
- * 
- *       if(hand1 == hand2) {
- *           js.println("あいこです");
- *       } else if(hand1 == 1) {                //プレーヤ1の手が ゴキブリ であるとき
- *           if(hand2 == 2) {
- *               winner = player1.getName();   //プレーヤ2が　人　だったらプレーヤ1勝つ
- *           } else if(hand2 == 3) {
- *               winner = player2.getName();   //プレーヤ2が　殺虫剤　だったらプレーヤ2勝つ
- *           }
- *       } else if(hand1 == 2) {                //プレーヤ1の手が 人 であるとき
- *           if(hand2 == 1) {
- *               winner = player2.getName();   //プレーヤ2が　ゴキブリ　だったらプレーヤ1勝つ
- *           } else if(hand2 == 3) {
- *               winner = player1.getName();   //プレーヤ2が　殺虫剤　だったらプレーヤ1勝つ
- *           }
- *       } else if(hand1 == 3) {                //プレーヤ1の手が 殺虫剤 であるとき
- *           if(hand2 == 1) {
- *               winner = player2.getName();   //プレーヤ2が　ゴキブリ　だったらプレーヤ1勝つ
- *           }else if(hand2 == 2){
- *               winner = player1.getName();   //プレーヤ2が　人　だったらプレーヤ1勝つ
- *           }
- *       }
- *       js.println(winner + "が勝ちました");
- *   }
- */
+  public int judge(int hand1, int hand2) {
+      // 主体はhand1のPlayer
+      // 0:勝ち 1:負け 2:引き分け
+      // 0:グー 1:チョキ 2:パー
+
+      if(hand1 > 2 || hand2 > 2) System.exit(1);
+
+      if(hand1 == hand2) {
+          return 2;
+      } else if(hand1 == 0) {
+          return (hand2 == 1) ?  0 : 1;
+      } else if(hand1 == 1) {
+          return (hand2 == 2) ?  0 : 1;
+      } else {
+          return (hand2 == 0) ?  0 : 1;
+      }
+  }
+
+  static String recToStr(String name, int[] game){
+      String s = (name + "        ").substring(0,8);
+      int i;
+      for(i=0; i<20; i++) {
+          s = s + game[i];
+      }
+      return s + "\n";
+  }
 
   public void run() {
     int i, j;
@@ -73,19 +67,10 @@ class Game implements Runnable {
             }
         }
         if(j == 20) {
-            String str = JankenRobot.recToStr(names[0], gameRec[0]) + JankenRobot.recToStr(names[1], gameRec[1]);
-            int w;
-            for(w=0, i=0; i<20; i++) {
-                w += JankenRobot.win(gameRec[0][i], gameRec[1][i]);
+            String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
+            for(i=0; i<20; i++) {
+                System.out.println(judge(gameRec[0][i], gameRec[1][i]));
             }
-            if(w > 0) {
-                str = str + names[0] + " が " + names[1] + "に" + (w + 20) + " 点で勝ちました";
-            }
-            else if(w < 0) {
-                str = str + names[1] + " が " + names[0] + "に" + (20 - w) + " 点で勝ちました";
-            }
-            else
-                str = str+names[0] + " と " + names[1] + "は引き分けでした";
             for(i=0; i<2; i++) {
                 outs[i].println(str);
             }
