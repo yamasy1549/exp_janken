@@ -1,15 +1,16 @@
 import java.util.*;
 import java.io.*;
 import java.net.*;
+import static original.Constants.*;
 
 // 呼び出し方
 // java Janken ホスト名 ポート番号 ユーザー名 手
 
 class Janken {
     Player player;
-    static int myHand;
+    static Hand myHand;
 
-    Janken(String hostname, String port, String name, int myHand) {
+    Janken(String hostname, String port, String name, Hand myHand) {
         this.player = new Player(name);
         this.myHand = myHand;
 
@@ -28,11 +29,10 @@ class Janken {
         String s = in.readLine();
         System.out.println("対戦相手：" + s);
 
-        out.println(this.myHand);
+        out.println(myHand);
         if((s = in.readLine()) == null) {
             System.exit(1);
         }
-        int opHand = Integer.parseInt(s);
 
         while((s = in.readLine()) != null) {
             System.out.println(s);

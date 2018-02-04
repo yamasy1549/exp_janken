@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import static original.Constants.*;
 
 class JankenView extends JFrame {
     String name;
@@ -12,9 +13,9 @@ class JankenView extends JFrame {
 
         // 手ボタン
         JButton[] handButtons = new JButton[3];
-        handButtons[0] = new JButton("グー");
-        handButtons[1] = new JButton("チョキ");
-        handButtons[2] = new JButton("パー");
+        handButtons[0] = new JButton("ROCK");
+        handButtons[1] = new JButton("SCISSORS");
+        handButtons[2] = new JButton("PAPER");
         for(JButton button: handButtons) {
             button.addActionListener(new handListener());
         }
@@ -35,19 +36,7 @@ class JankenView extends JFrame {
             name = name;
 
             String clickedHand = e.getActionCommand();
-            int hand = 0;
-
-            switch(clickedHand) {
-                case "グー":
-                    hand = 0;
-                    break;
-                case "チョキ":
-                    hand = 1;
-                    break;
-                case "パー":
-                    hand = 2;
-            }
-
+            Hand hand = Hand.valueOf(clickedHand);
             new Janken("192.168.1.3", "9999", name, hand);
         }
     }
