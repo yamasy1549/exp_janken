@@ -4,10 +4,11 @@ import static original.Constants.*;
 
 class JankenView extends JFrame {
     String name;
+    JTextArea log = new JTextArea("", 6, 10);
     JTextArea namearea = new JTextArea("", 1, 10);
 
     JankenView() {
-        setBounds(100, 100, 300, 200);
+        setBounds(100, 100, 500, 500);
 
         namearea.requestFocus();
 
@@ -21,6 +22,7 @@ class JankenView extends JFrame {
         }
 
         JPanel panel = new JPanel();
+        panel.add(log);
         panel.add(namearea);
         for(JButton button: handButtons) {
             panel.add(button);
@@ -37,7 +39,7 @@ class JankenView extends JFrame {
 
             String clickedHand = e.getActionCommand();
             Hand hand = Hand.valueOf(clickedHand);
-            new Janken("192.168.1.3", "9999", name, hand);
+            new Janken("192.168.1.3", "9999", name, hand, log);
         }
     }
 
