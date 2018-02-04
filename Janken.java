@@ -11,12 +11,12 @@ class Janken {
     Player player;
     static Hand myHand;
 
-    Janken(String hostname, String port, String name, Hand myHand, JTextArea log) {
+    Janken(String hostname, int port, String name, Hand myHand, JTextArea log) {
         this.player = new Player(name);
         this.myHand = myHand;
 
         try {
-            Socket sock = new Socket(hostname, Integer.parseInt(port));
+            Socket sock = new Socket(hostname, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-8"));
             PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
             PrintWriter out2 = new PrintWriter(new TextAreaWriter(log), true);

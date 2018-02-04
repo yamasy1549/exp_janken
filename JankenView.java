@@ -14,9 +14,9 @@ class JankenView extends JFrame {
 
         // 手ボタン
         JButton[] handButtons = new JButton[3];
-        handButtons[0] = new JButton("ROCK");
-        handButtons[1] = new JButton("SCISSORS");
-        handButtons[2] = new JButton("PAPER");
+        handButtons[0] = new JButton(Hand.ROCK.toString());
+        handButtons[1] = new JButton(Hand.SCISSORS.toString());
+        handButtons[2] = new JButton(Hand.PAPER.toString());
         for(JButton button: handButtons) {
             button.addActionListener(new handListener());
         }
@@ -39,7 +39,7 @@ class JankenView extends JFrame {
 
             String clickedHand = e.getActionCommand();
             Hand hand = Hand.valueOf(clickedHand);
-            new Janken("192.168.1.3", "9999", name, hand, log);
+            new Janken("192.168.1.3", JankenServerPort, name, hand, log);
         }
     }
 

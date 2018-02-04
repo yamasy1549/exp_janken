@@ -1,8 +1,9 @@
 import java.io.*;
 import java.net.*;
+import static original.Constants.*;
 
 // 呼び出し方
-// java JankenServer 対戦モード ポート番号
+// java JankenServer
 
 class JankenServer {
     public JankenServer(int port){
@@ -28,6 +29,6 @@ class JankenServer {
     }
 
     public static void main(String args[]) {
-        new JankenServer(Integer.parseInt(args[0]));
+        new JankenServer(JankenServerPort);
     }
 }
