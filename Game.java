@@ -29,10 +29,8 @@ class Game implements Runnable {
       }
   }
 
-  static String recToStr(String name, Hand hand){
-      String s = (name + "        ").substring(0,8);
-      s = s + hand.toString();
-      return s + "\n";
+  static String recToStr(String name, Hand hand) {
+      return (name + "        ").substring(0,8) + hand.toString() + "\n";
   }
 
   public void run() {
