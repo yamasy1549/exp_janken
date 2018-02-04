@@ -3,43 +3,44 @@ import java.awt.event.*;
 import static original.Constants.*;
 
 class JankenView extends JFrame {
-    String name;
-    JTextArea log = new JTextArea("", 6, 10);
+    Player player;
+    JTextArea logArea = new JTextArea("", 6, 10);
     JTextArea namearea = new JTextArea("", 1, 10);
 
     JankenView() {
-        setBounds(100, 100, 500, 500);
+        String name = JOptionPane.showInputDialog(this, "Input your name");
+        player = new Player(name);
 
-        namearea.requestFocus();
+        // 名前表示
+        JLabel nameArea = new JLabel("Hello, " + name + "!");
 
         // 手ボタン
         JButton[] handButtons = new JButton[3];
-        handButtons[0] = new JButton("ROCK");
-        handButtons[1] = new JButton("SCISSORS");
-        handButtons[2] = new JButton("PAPER");
+        handButtons[0] = new JButton(Hand.ROCK.toString());
+        handButtons[1] = new JButton(Hand.SCISSORS.toString());
+        handButtons[2] = new JButton(Hand.PAPER.toString());
         for(JButton button: handButtons) {
             button.addActionListener(new handListener());
         }
 
+        // 配置
+        // TODO: レイアウト
         JPanel panel = new JPanel();
-        panel.add(log);
-        panel.add(namearea);
+        panel.add(logArea);
+        panel.add(nameArea);
         for(JButton button: handButtons) {
             panel.add(button);
         }
 
         getContentPane().add(panel);
+        setBounds(100, 100, 500, 500);
     }
 
     public class handListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String name = namearea.getText();
-            if(name == "") System.exit(1);
-            name = name;
-
             String clickedHand = e.getActionCommand();
             Hand hand = Hand.valueOf(clickedHand);
-            new Janken("192.168.1.3", "9999", name, hand, log);
+            new Janken("192.168.1.3", JankenServerPort, player, hand, logArea);
         }
     }
 

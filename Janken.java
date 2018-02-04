@@ -8,19 +8,19 @@ import static original.Constants.*;
 // java Janken ホスト名 ポート番号 ユーザー名 手 出力
 
 class Janken {
-    Player player;
+    static Player player;
     static Hand myHand;
 
-    Janken(String hostname, String port, String name, Hand myHand, JTextArea log) {
-        this.player = new Player(name);
+    Janken(String hostname, int port, Player player, Hand myHand, JTextArea logArea) {
+        this.player = player;
         this.myHand = myHand;
 
         try {
-            Socket sock = new Socket(hostname, Integer.parseInt(port));
+            Socket sock = new Socket(hostname, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-8"));
             PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
-            PrintWriter out2 = new PrintWriter(new TextAreaWriter(log), true);
-            out.println(this.player.name);
+            PrintWriter out2 = new PrintWriter(new TextAreaWriter(logArea), true);
+            out.println(this.player.getName());
             janken(in, out, out2);
         } catch(IOException ioe) {
             System.out.println(ioe);
@@ -56,6 +56,10 @@ class Janken {
 
         while((s = in.readLine()) != null) {
             out2.println(s);
+            try {
+                player.setResult(Result.valueOf(s));
+            } catch(Exception e) {
+            }
         }
     }
 }
