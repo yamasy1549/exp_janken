@@ -19,9 +19,9 @@ class Janken {
             Socket sock = new Socket(hostname, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream(), "UTF-8"));
             PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
-            PrintWriter out2 = new PrintWriter(new TextAreaWriter(logArea), true);
+            PrintWriter viewout = new PrintWriter(new TextAreaWriter(logArea), true);
             out.println(this.player.getName());
-            janken(in, out, out2);
+            janken(in, out, viewout);
         } catch(IOException ioe) {
             System.out.println(ioe);
         }
@@ -39,15 +39,16 @@ class Janken {
             text.append(new String(c, off, len));
         }
 
-        @Override public void flush() { }
+        @Override
+        public void flush() { }
 
         @Override
         public void close() { }
     }
 
-    static void janken(BufferedReader in, PrintWriter out, PrintWriter out2) throws IOException {
+    static void janken(BufferedReader in, PrintWriter out, PrintWriter viewout) throws IOException {
         String s = in.readLine();
-        out2.println("対戦相手：" + s);
+        viewout.println("対戦相手：" + s);
 
         out.println(myHand);
         if((s = in.readLine()) == null) {
@@ -55,7 +56,7 @@ class Janken {
         }
 
         while((s = in.readLine()) != null) {
-            out2.println(s);
+            viewout.println(s);
             try {
                 player.setResult(Result.valueOf(s));
             } catch(Exception e) {
