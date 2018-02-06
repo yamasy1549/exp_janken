@@ -2,14 +2,22 @@ package models;
 
 import java.io.*;
 import java.util.*;
+import views.*;
 import static original.Constants.*;
 
 public class Player implements Playable {
     // 名前
-    public String name;
+    private String name;
 
     public String getName() {
         return this.name;
+    }
+
+    // デッキ
+    private Deck deck;
+
+    public Deck getDeck() {
+        return this.deck;
     }
 
     // ポイント
@@ -26,6 +34,7 @@ public class Player implements Playable {
 
     public Player(String name) {
         this.name = name;
+        this.deck = new CardDeck();
         load();
     }
 
