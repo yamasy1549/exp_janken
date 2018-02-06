@@ -3,19 +3,19 @@ package views;
 import javax.swing.*;
 import java.awt.event.*;
 import models.*;
-import views.*;
 import static original.Constants.*;
 
 public class Main extends JFrame {
-    Person person;
-    JTextArea namearea = new JTextArea("", 1, 10);
-
     public Main() {
         // 名前入力
-        person = new Person(new InputName().getName());
+        String personName = new InputName().getName();
+
+        // プレーヤー準備
+        Person person = new Person(personName);
+        Computer computer = new Computer();
 
         // 名前表示
-        JLabel nameArea = new JLabel("Hello, " + person.getName() + "!");
+        JLabel nameArea = new JLabel("Hello, " + personName + "!\nThe opponent is " + computer.getName() + ".");
 
         // 手ボタン
         JButton[] handButtons = new JButton[3];
