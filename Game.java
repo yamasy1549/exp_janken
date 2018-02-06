@@ -42,27 +42,26 @@ class Game implements Runnable {
             ins[i] = new BufferedReader(new InputStreamReader(sock[i].getInputStream()));
             names[i] = ins[i].readLine();
         }
-        for(i=0; i<2; i++) {
+        for(i=0; i<2; i++)
             outs[i].println(names[1-i]);
-        }
         String[] s = new String[2];
-        Hand[] gameRec = new Hand[2];
+        Hand[] hands = new Hand[2];
 
         for(i=0; i<2; i++) {
             if((s[i] = ins[i].readLine()) == null) {
                 break;
             }
-            gameRec[i] = Hand.valueOf(s[i]);
+            hands[i] = Hand.valueOf(s[i]);
         }
         for(i=0; i<2; i++){
-            outs[i].println(gameRec[1-i]);
+            outs[i].println(hands[1-i]);
         }
 
-        String str = recToStr(names[0], gameRec[0]) + recToStr(names[1], gameRec[1]);
+        String str = recToStr(names[0], hands[0]) + recToStr(names[1], hands[1]);
         for(i=0; i<2; i++) {
             outs[i].println(str);
 
-            Result result = (i == 0) ? judge(gameRec[0], gameRec[1]) : judge(gameRec[1], gameRec[0]);
+            Result result = judge(hands[i], hands[1-i]);
             outs[i].println(result);
         }
         js.println(str);

@@ -40,7 +40,7 @@ class JankenView extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String clickedHand = e.getActionCommand();
             Hand hand = Hand.valueOf(clickedHand);
-            new Janken("192.168.1.3", JankenServerPort, player, hand, logArea);
+            new Janken("172.16.85.30", JankenServerPort, player, hand, logArea);
         }
     }
 
