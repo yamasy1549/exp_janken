@@ -28,13 +28,18 @@ public class Player implements Playable {
     }
 
     // ゲーム結果
-    private Map<Result, Integer> records = new HashMap<Result, Integer>() {
-        {
-            put(Result.WIN, 0);
-            put(Result.LOSE, 0);
-            put(Result.DRAW, 0);
-        }
-    };
+    private Record records = new Record();
+
+    private Record getRecords() {
+        return this.records;
+    }
+
+    // 過去すべてのゲーム結果
+    private Record allRecords = new Record();
+
+    private Record getallRecords() {
+        return this.allRecords;
+    }
 
     public Player(String name) {
         this.name = name;
@@ -61,7 +66,7 @@ public class Player implements Playable {
     }
 
     public void record(Result result) {
-        this.records.merge(result, 1, Integer::sum);
+        this.allRecords.merge(result, 1);
         save();
     }
 
@@ -70,9 +75,9 @@ public class Player implements Playable {
             File file = new File(DBDIR + name);
             FileWriter writer = new FileWriter(file);
             String[] _outputs = {
-                this.records.get(Result.WIN).toString(),
-                this.records.get(Result.LOSE).toString(),
-                this.records.get(Result.DRAW).toString(),
+                Integer.toString(this.allRecords.get(Result.WIN)),
+                Integer.toString(this.allRecords.get(Result.LOSE)),
+                Integer.toString(this.allRecords.get(Result.DRAW)),
                 Integer.toString(this.points)
             };
             writer.write(String.join("\t", _outputs));
@@ -89,9 +94,9 @@ public class Player implements Playable {
             if(file.exists()) {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String[] playerData = reader.readLine().split("\t");
-                this.records.put(Result.WIN, Integer.parseInt(playerData[0]));
-                this.records.put(Result.LOSE, Integer.parseInt(playerData[1]));
-                this.records.put(Result.DRAW, Integer.parseInt(playerData[2]));
+                this.allRecords.set(Result.WIN, Integer.parseInt(playerData[0]));
+                this.allRecords.set(Result.LOSE, Integer.parseInt(playerData[1]));
+                this.allRecords.set(Result.DRAW, Integer.parseInt(playerData[2]));
                 this.points = Integer.parseInt(playerData[3]);
                 reader.close();
             } else {
