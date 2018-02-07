@@ -17,8 +17,8 @@ public class Main extends JFrame {
         // 配置
         // TODO: レイアウト
         JPanel panel = new JPanel();
-        panel.add(computer.getDeck());
-        panel.add(person.getDeck());
+        panel.add(new PlayerArea(computer));
+        panel.add(new PlayerArea(person));
 
         this.add(panel);
         setSize(1000, 700);

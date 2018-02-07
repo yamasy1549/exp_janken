@@ -7,6 +7,8 @@ public class Constants {
 
     public static final String DBDIR = "./db/";
 
+    public static final int CARDNUM = 5;
+
     public static enum Hand {
         ROCK,
         SCISSORS,

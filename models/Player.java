@@ -13,15 +13,19 @@ public class Player implements Playable {
         return this.name;
     }
 
-    // デッキ
-    private Deck deck;
+    // カード
+    private Card[] cards;
 
-    public Deck getDeck() {
-        return this.deck;
+    public Card[] getCards() {
+        return this.cards;
     }
 
     // ポイント
     private int points;
+
+    public int getPoints() {
+        return this.points;
+    }
 
     // ゲーム結果
     private Map<Result, Integer> records = new HashMap<Result, Integer>() {
@@ -34,12 +38,18 @@ public class Player implements Playable {
 
     public Player(String name) {
         this.name = name;
-        this.deck = new CardDeck();
+        setCards(CARDNUM);
         load();
     }
 
     public void setCards(int count) {
-        // TODO
+        this.cards = new Card[count];
+
+        for(int i=0; i<count; i++) {
+            Hand hand = Hand.random();
+            this.cards[i] = new Card(hand);
+        }
+
     }
 
     public void betPoints(int points) {
