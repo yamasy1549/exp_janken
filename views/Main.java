@@ -19,7 +19,7 @@ public class Main extends JFrame {
         JPanel panel = new JPanel();
         panel.add(new PlayerArea(computer));
         panel.add(new PlayerArea(person));
-        panel.add(new ControlArea(person));
+        panel.add(new ControlArea(person, computer));
 
         this.add(panel);
         setSize(1000, 700);

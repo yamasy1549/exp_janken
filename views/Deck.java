@@ -10,8 +10,8 @@ public class Deck extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
 
-        for(Card card : player.getCards()) {
-            add(card);
+        for(Hand hand : player.getHands()) {
+            add(new Card(hand));
         }
     }
 }

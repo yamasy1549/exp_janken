@@ -11,7 +11,8 @@ public class Card extends JButton {
         this._hand = hand.toString();
         setActionCommand(this._hand);
         addActionListener(new cardListener());
-        close();
+        // close();
+        open();
     }
 
     public class cardListener implements ActionListener {

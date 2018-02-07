@@ -13,11 +13,15 @@ public class Player implements Playable {
         return this.name;
     }
 
-    // カード
-    private Card[] cards;
+    // 手
+    private Hand[] hands;
 
-    public Card[] getCards() {
-        return this.cards;
+    public Hand[] getHands() {
+        return this.hands;
+    }
+
+    public Hand getHand(int index) {
+        return this.hands[index];
     }
 
     // ポイント
@@ -30,31 +34,29 @@ public class Player implements Playable {
     // ゲーム結果
     private Record records = new Record();
 
-    private Record getRecords() {
-        return this.records;
+    public int getRecord(Result result) {
+        return this.records.get(result);
     }
 
     // 過去すべてのゲーム結果
     private Record allRecords = new Record();
 
-    private Record getallRecords() {
-        return this.allRecords;
+    public int getAllRecord(Result result) {
+        return this.allRecords.get(result);
     }
 
     public Player(String name) {
         this.name = name;
-        setCards(CARDNUM);
+        setHands(HANDNUM);
         load();
     }
 
-    public void setCards(int count) {
-        this.cards = new Card[count];
+    public void setHands(int count) {
+        this.hands = new Hand[count];
 
         for(int i=0; i<count; i++) {
-            Hand hand = Hand.random();
-            this.cards[i] = new Card(hand);
+            this.hands[i] = Hand.random();
         }
-
     }
 
     public void betPoints(int points) {
@@ -66,6 +68,11 @@ public class Player implements Playable {
     }
 
     public void record(Result result) {
+        this.records.merge(result, 1);
+        save();
+    }
+
+    public void allRecord(Result result) {
         this.allRecords.merge(result, 1);
         save();
     }

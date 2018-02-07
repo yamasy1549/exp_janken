@@ -3,8 +3,8 @@ package models;
 import static original.Constants.*;
 
 public interface Playable {
-    // ランダムにカードを配置する
-    void setCards(int count);
+    // ランダムに手を用意する
+    void setHands(int count);
 
     // ポイントを賭ける
     void betPoints(int points);
