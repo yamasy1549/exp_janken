@@ -8,8 +8,6 @@ public class Card extends JButton {
     private String _hand;
 
     public Card(Hand hand) {
-        super();
-
         this._hand = hand.toString();
         setActionCommand(this._hand);
         addActionListener(new cardListener());

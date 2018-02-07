@@ -7,9 +7,8 @@ import static original.Constants.*;
 
 public class Deck extends JPanel {
     public Deck(Player player) {
-        super();
-
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setOpaque(false);
 
         for(Card card : player.getCards()) {
             add(card);
