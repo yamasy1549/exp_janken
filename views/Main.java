@@ -18,6 +18,7 @@ public class Main extends JFrame {
         // TODO: レイアウト
         JPanel panel = new JPanel();
         panel.add(new PlayerArea(computer));
+        panel.add(new ResultArea(person, computer));
         panel.add(new PlayerArea(person));
         panel.add(new ControlArea(person, computer));
 
