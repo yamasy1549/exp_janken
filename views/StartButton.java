@@ -21,14 +21,13 @@ public class StartButton extends JButton {
         public void actionPerformed(ActionEvent e) {
             Judge judge = new Judge();
 
+            Result playResult = judge.judgePlayers(player1, player2);
+            player1.allRecord(playResult);
+
             for(Component component : getParent().getParent().getComponents()) {
                 if(component.getName() != "ResultArea") continue;
-                ((ResultArea)component).updateHands();
+                ((ResultArea)component).updateHands(playResult);
             }
-
-            Result result = judge.judgePlayers(player1, player2);
-            System.out.println(result);
-            player1.allRecord(result);
         }
     }
 }

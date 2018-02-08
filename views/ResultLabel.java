@@ -17,6 +17,7 @@ public class ResultLabel extends JLabel {
     }
 
     public void updateResult(Result result) {
-        setText(result.toString());
+        // デバッグ時見やすいように空白入れてるだけ
+        setText(result.toString() + " ");
     }
 }
