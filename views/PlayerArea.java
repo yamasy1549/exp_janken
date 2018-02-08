@@ -11,6 +11,7 @@ import static original.Constants.*;
 
 public class PlayerArea extends JPanel {
     public PlayerArea(Player player) {
+        setName("PlayerArea");
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         add(new PlayerInfo(player));
