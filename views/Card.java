@@ -77,6 +77,7 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         if(card == null) return;
 
         swapCards(card);
+        updateHands();
     }
 
     private void swapCards(Card target) {
@@ -89,6 +90,11 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
 
         setText(dragText);
         setIcon(dragIcon);
+    }
+
+    private void updateHands() {
+        Deck deck = (Deck)getParent();
+        deck.updateHands();
     }
 
     public void dragEnter(DropTargetDragEvent dtde) { }

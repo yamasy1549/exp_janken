@@ -24,6 +24,15 @@ public class Player implements Playable {
         return this.hands[index];
     }
 
+    public void setHand(int index, Hand hand) {
+        this.hands[index] = hand;
+    }
+
+    public void setHands(Hand[] hands) {
+        if(hands.length != HANDNUM) return;
+        this.hands = hands;
+    }
+
     // ポイント
     private int points;
 
