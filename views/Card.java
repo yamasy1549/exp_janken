@@ -9,8 +9,10 @@ import static original.Constants.*;
 
 public class Card extends JLabel implements Transferable, DragGestureListener, DropTargetListener {
     private static final DataFlavor cardFlavor = new DataFlavor(Card.class, "Card");
+    private Hand hand;
 
     public Card(Hand hand) {
+        this.hand = hand;
         ImageIcon icon = new ImageIcon(imagePath(hand));
         setIcon(icon);
         setText(hand.toString());
@@ -23,6 +25,16 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
 
     private String imagePath(Hand hand) {
         return "./images/" + hand.toString() + ".png";
+    }
+
+    public void close() {
+        ImageIcon icon = new ImageIcon("./images/CLOSE.png");
+        setIcon(icon);
+    }
+
+    public void open() {
+        ImageIcon icon = new ImageIcon(imagePath(this.hand));
+        setIcon(icon);
     }
 
     public void dragGestureRecognized(DragGestureEvent dge) {

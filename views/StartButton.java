@@ -25,8 +25,18 @@ public class StartButton extends JButton {
             player1.allRecord(playResult);
 
             for(Component component : getParent().getParent().getComponents()) {
-                if(component.getName() != "ResultArea") continue;
-                ((ResultArea)component).updateHands(playResult);
+                if(component.getName() == null) continue;
+                switch(component.getName()) {
+                    case "ResultArea":
+                        ((ResultArea)component).updateHands(playResult);
+                        break;
+                    case "PlayerArea":
+                        for(Component areaComponent : ((PlayerArea)component).getComponents()) {
+                            if(areaComponent instanceof Deck)
+                                ((Deck)areaComponent).open();
+                        }
+                        break;
+                }
             }
         }
     }
