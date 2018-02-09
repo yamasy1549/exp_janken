@@ -20,6 +20,7 @@ public class ResultArea extends JPanel {
         this.judge = new Judge();
 
         setName("ResultArea");
+        setSize(1200, 300);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
 

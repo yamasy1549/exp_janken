@@ -7,6 +7,7 @@ import static original.Constants.*;
 public class ControlArea extends JPanel {
 
     ControlArea(Player player1, Player player2) {
+        setSize(200, 700);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
 
