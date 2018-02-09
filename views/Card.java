@@ -19,7 +19,7 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         setIcon(icon);
         setText(hand.toString());
         // 文字を隠す（他にやりようがありそう）
-        setFont(new java.awt.Font("", 1, 0));
+        setFont(new Font("", 1, 0));
 
         new DragSource().createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_MOVE, this);
         new DropTarget(this, DnDConstants.ACTION_MOVE, this);
