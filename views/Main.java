@@ -8,7 +8,11 @@ import static original.Constants.*;
 public class Main extends JFrame {
     public Main() {
         // 名前入力
-        String personName = new InputName().getName();
+        String personName;
+        do {
+            personName = new InputName().getName();
+            if(personName == null) return;
+        } while(personName.equals(""));
 
         // プレーヤー準備
         Person person = new Person(personName);
