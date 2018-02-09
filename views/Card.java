@@ -8,11 +8,13 @@ import javax.swing.*;
 import static original.Constants.*;
 
 public class Card extends JLabel implements Transferable, DragGestureListener, DropTargetListener {
-    private static final DataFlavor cardFlavor = new DataFlavor(Card.class, "Card");
-    private Hand hand;
 
-    public Card(Hand hand) {
+    private Hand hand;
+    private static final DataFlavor cardFlavor = new DataFlavor(Card.class, "Card");
+
+    Card(Hand hand) {
         this.hand = hand;
+
         ImageIcon icon = new ImageIcon(imagePath(hand));
         setIcon(icon);
         setText(hand.toString());
@@ -31,36 +33,94 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         return this.hand;
     }
 
+    /**
+     * Cardを入れ替える
+     * @param target 入れ替え元のCard
+     */
+    private void swapCards(Card target) {
+        Hand dragHand = target.getHand();
+        String dragText = target.getText();
+        Icon dragIcon = target.getIcon();
+
+        target.setHand(getHand());
+        target.setText(getText());
+        target.setIcon(getIcon());
+        target.repaint();
+
+        setHand(dragHand);
+        setText(dragText);
+        setIcon(dragIcon);
+    }
+
+    /**
+     * CardのあるDeckのupdateHands()を呼ぶ
+     */
+    private void updateHands() {
+        Deck deck = (Deck)getParent();
+        deck.updateHands();
+    }
+
+    /**
+     * 表示したい手の画像パスを返す
+     * @param hand 表示したい手
+     * @return 画像のパス
+     */
     private String imagePath(Hand hand) {
         return "./images/" + hand.toString() + ".png";
     }
 
+    /**
+     * カードを閉じる
+     */
     public void close() {
         ImageIcon icon = new ImageIcon("./images/CLOSE.png");
         setIcon(icon);
     }
 
+    /**
+     * カードを開ける
+     */
     public void open() {
         ImageIcon icon = new ImageIcon(imagePath(this.hand));
         setIcon(icon);
     }
 
+    /**
+     * DragGestureListenerの実装
+     */
+    @Override
     public void dragGestureRecognized(DragGestureEvent dge) {
         dge.startDrag(DragSource.DefaultMoveDrop, this);
     }
 
+    /**
+     * Transferableの実装
+     */
+    @Override
     public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] { cardFlavor };
     }
 
+    /**
+     * Transferableの実装
+     */
+    @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
         return true;
     }
 
+    /**
+     * Transferableの実装
+     */
+    @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
         return this;
     }
 
+    /**
+     * DropTargetListenerの実装
+     */
+    @Override
     public void drop(DropTargetDropEvent dtde) {
         dtde.acceptDrop(DnDConstants.ACTION_MOVE);
         Transferable tr = dtde.getTransferable();
@@ -100,28 +160,31 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         updateHands();
     }
 
-    private void swapCards(Card target) {
-        Hand dragHand = target.getHand();
-        String dragText = target.getText();
-        Icon dragIcon = target.getIcon();
-
-        target.setHand(getHand());
-        target.setText(getText());
-        target.setIcon(getIcon());
-        target.repaint();
-
-        setHand(dragHand);
-        setText(dragText);
-        setIcon(dragIcon);
+    /**
+     * DropTargetListenerの実装
+     */
+    @Override
+    public void dragEnter(DropTargetDragEvent dtde) {
     }
 
-    private void updateHands() {
-        Deck deck = (Deck)getParent();
-        deck.updateHands();
+    /**
+     * DropTargetListenerの実装
+     */
+    @Override
+    public void dragOver(DropTargetDragEvent dtde) {
     }
 
-    public void dragEnter(DropTargetDragEvent dtde) { }
-    public void dragOver(DropTargetDragEvent dtde) { }
-    public void dropActionChanged(DropTargetDragEvent dtde) { }
-    public void dragExit(DropTargetEvent dte) { }
+    /**
+     * DropTargetListenerの実装
+     */
+    @Override
+    public void dropActionChanged(DropTargetDragEvent dtde) {
+    }
+
+    /**
+     * DropTargetListenerの実装
+     */
+    @Override
+    public void dragExit(DropTargetEvent dte) {
+    }
 }

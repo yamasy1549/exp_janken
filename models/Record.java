@@ -6,9 +6,10 @@ import views.*;
 import static original.Constants.*;
 
 public class Record {
+
     private int WIN, LOSE, DRAW;
 
-    public Record() {
+    Record() {
         this.WIN = 0;
         this.LOSE = 0;
         this.DRAW = 0;

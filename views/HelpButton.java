@@ -1,10 +1,11 @@
 package views;
 
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class HelpButton extends JButton {
-    public HelpButton() {
+
+    HelpButton() {
         setText("遊び方");
         addActionListener(new helpListener());
     }

@@ -6,6 +6,7 @@ import models.*;
 import static original.Constants.*;
 
 public class Main extends JFrame {
+
     public Main() {
         // 名前入力
         String personName;

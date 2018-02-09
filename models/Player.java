@@ -6,6 +6,7 @@ import views.*;
 import static original.Constants.*;
 
 public class Player implements Playable {
+
     // 名前
     private String name;
 
@@ -54,12 +55,17 @@ public class Player implements Playable {
         return this.allRecords.get(result);
     }
 
-    public Player(String name) {
+    Player(String name) {
         this.name = name;
+
         setHands(HANDNUM);
         load();
     }
 
+    /**
+     * Playableの実装
+     */
+    @Override
     public void setHands(int count) {
         this.hands = new Hand[count];
 
@@ -68,24 +74,43 @@ public class Player implements Playable {
         }
     }
 
+    /**
+     * Playableの実装
+     */
+    @Override
     public void betPoints(int points) {
         this.points -= points;
     }
 
+    /**
+     * Playableの実装
+     */
+    @Override
     public void getPoints(int points) {
         this.points += points;
     }
 
+    /**
+     * Playableの実装
+     */
+    @Override
     public void record(Result result) {
         this.records.merge(result, 1);
         save();
     }
 
+    /**
+     * Playableの実装
+     */
+    @Override
     public void allRecord(Result result) {
         this.allRecords.merge(result, 1);
         save();
     }
 
+    /**
+     * 過去すべてのゲーム結果とポイントをファイルに保存する
+     */
     private void save() {
         try {
             File file = new File(DBDIR + name);
@@ -103,6 +128,9 @@ public class Player implements Playable {
         }
     }
 
+    /**
+     * 過去すべてのゲーム結果とポイントをファイルから読み込む
+     */
     private void load() {
         try {
             File file = new File(DBDIR + name);

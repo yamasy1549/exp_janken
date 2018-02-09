@@ -1,16 +1,16 @@
 package views;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.image.*;
 import java.awt.*;
+import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
+import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
 public class PlayerArea extends JPanel {
-    public PlayerArea(Player player) {
+
+    PlayerArea(Player player) {
         setName("PlayerArea");
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -18,6 +18,10 @@ public class PlayerArea extends JPanel {
         add(new Deck(player));
     }
 
+    /**
+     * 背景画像を設定する
+     */
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 

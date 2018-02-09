@@ -1,12 +1,13 @@
 package views;
 
-import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
 public class StartButton extends JButton {
+
     private Player player1, player2;
 
     public StartButton(Player player1, Player player2) {
@@ -26,11 +27,14 @@ public class StartButton extends JButton {
 
             for(Component component : getParent().getParent().getComponents()) {
                 if(component.getName() == null) continue;
+
                 switch(component.getName()) {
                     case "ResultArea":
-                        ((ResultArea)component).updateHands(playResult);
+                        // Result表示を更新する
+                        ((ResultArea)component).updateResults(playResult);
                         break;
                     case "PlayerArea":
+                        // Cardを全てopenにする
                         for(Component areaComponent : ((PlayerArea)component).getComponents()) {
                             if(areaComponent instanceof Deck)
                                 ((Deck)areaComponent).open();
