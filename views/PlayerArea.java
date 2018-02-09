@@ -9,9 +9,9 @@ public class PlayerArea extends JJPanel {
     PlayerArea(Player player) {
         super("PlayerArea");
 
-        PlayerInfo playerInfo = new PlayerInfo(player);
         Deck deck = new Deck(player);
-        addAndSetBounds(playerInfo, 0, 0, 200, 300);
-        addAndSetBounds(deck, 200, 0, 900, 300);
+        PlayerInfo playerInfo = new PlayerInfo(player);
+        addAndSetBounds(deck, 0, 0, 870, 300);
+        addAndSetBounds(playerInfo, 870, 0, 200, 300);
     }
 }

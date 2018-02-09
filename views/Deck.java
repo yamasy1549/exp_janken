@@ -23,7 +23,7 @@ public class Deck extends JJPanel {
 
         for(int i=0; i<playerHands.length; i++) {
             this.cards[i] = new Card(playerHands[i]);
-            addAndSetBounds(this.cards[i], i*(CARD_WIDTH+10), 54, CARD_WIDTH, CARD_HEIGHT);
+            addAndSetBounds(this.cards[i], i*(CARD_WIDTH+10)+30, 54, CARD_WIDTH, CARD_HEIGHT);
 
             // ComputerのCardのうちランダム1つを除いてcloseする
             if((player instanceof Computer) && i != openCardIndex) {

@@ -21,12 +21,12 @@ public class ResultArea extends JJPanel {
         this.player2 = player2;
         this.judge = new Judge();
 
-        addAndSetBounds(this.label, 0, 0, 200, 100);
-
         for(int i=0; i<HANDNUM; i++) {
             this.labels[i] = new ResultLabel();
-            addAndSetBounds(this.labels[i], i*(CARD_WIDTH+10)+200, 0, CARD_WIDTH, 100);
+            addAndSetBounds(this.labels[i], i*(CARD_WIDTH+10)+30, 0, CARD_WIDTH, 100);
         }
+
+        addAndSetBounds(this.label, 870, 0, 200, 100);
     }
 
     /**
