@@ -1,5 +1,6 @@
 package original;
 
+import java.awt.*;
 import java.util.*;
 
 public class Constants {
@@ -32,4 +33,7 @@ public class Constants {
         LOSE,
         DRAW
     }
+
+    public static final Color BLACK = new Color(23, 31, 38);
+    public static final Color MINT = new Color(80, 171, 164);
 }
