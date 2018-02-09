@@ -35,5 +35,6 @@ public class Constants {
     }
 
     public static final Color BLACK = new Color(23, 31, 38);
+    public static final Color WHITE = new Color(255, 255, 255);
     public static final Color MINT = new Color(80, 171, 164);
 }
