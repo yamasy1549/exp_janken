@@ -23,6 +23,14 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         new DropTarget(this, DnDConstants.ACTION_MOVE, this);
     }
 
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
     private String imagePath(Hand hand) {
         return "./images/" + hand.toString() + ".png";
     }
@@ -93,13 +101,16 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
     }
 
     private void swapCards(Card target) {
+        Hand dragHand = target.getHand();
         String dragText = target.getText();
         Icon dragIcon = target.getIcon();
 
+        target.setHand(getHand());
         target.setText(getText());
         target.setIcon(getIcon());
         target.repaint();
 
+        setHand(dragHand);
         setText(dragText);
         setIcon(dragIcon);
     }
