@@ -5,7 +5,7 @@ import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class ResultArea extends JPanel {
+public class ResultArea extends JJPanel {
 
     private Player player1, player2;
     private Judge judge;
@@ -15,20 +15,17 @@ public class ResultArea extends JPanel {
     private ResultLabel[] labels = new ResultLabel[HANDNUM];
 
     ResultArea(Player player1, Player player2) {
+        super("ResultArea");
+
         this.player1 = player1;
         this.player2 = player2;
         this.judge = new Judge();
 
-        setName("ResultArea");
-        setSize(1200, 300);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setOpaque(false);
-
-        add(this.label);
+        addAndSetBounds(this.label, 0, 0, 200, 100);
 
         for(int i=0; i<HANDNUM; i++) {
             this.labels[i] = new ResultLabel();
-            add(this.labels[i]);
+            addAndSetBounds(this.labels[i], i*(CARD_WIDTH+10)+200, 0, CARD_WIDTH, 100);
         }
     }
 

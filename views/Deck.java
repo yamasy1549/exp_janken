@@ -7,17 +7,15 @@ import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class Deck extends JPanel {
+public class Deck extends JJPanel {
 
     private Player player;
     private Card cards[] = new Card[HANDNUM];
 
     Deck(Player player) {
-        this.player = player;
+        super("Deck");
 
-        setName("Deck");
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setOpaque(false);
+        this.player = player;
 
         // closeしないCardをランダムに決める
         int openCardIndex = new Random().nextInt(HANDNUM);
@@ -25,7 +23,7 @@ public class Deck extends JPanel {
 
         for(int i=0; i<playerHands.length; i++) {
             this.cards[i] = new Card(playerHands[i]);
-            add(this.cards[i]);
+            addAndSetBounds(this.cards[i], i*(CARD_WIDTH+10), 54, CARD_WIDTH, CARD_HEIGHT);
 
             // ComputerのCardのうちランダム1つを除いてcloseする
             if((player instanceof Computer) && i != openCardIndex) {

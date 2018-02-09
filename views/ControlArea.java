@@ -4,17 +4,15 @@ import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class ControlArea extends JPanel {
+public class ControlArea extends JJPanel {
 
     ControlArea(Player player1, Player player2) {
-        setSize(200, 700);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setOpaque(false);
+        super("ControlArea");
 
         HelpButton helpButton = new HelpButton();
-        StartButton startButton = new StartButton(player1, player2);
+        addAndSetBounds(helpButton, 25, 470, 150, 80);
 
-        add(helpButton);
-        add(startButton);
+        StartButton startButton = new StartButton(player1, player2);
+        addAndSetBounds(startButton, 25, 570, 150, 80);
     }
 }

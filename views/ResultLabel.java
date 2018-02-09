@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.*;
 import javax.swing.*;
 import models.*;
 import static original.Constants.*;
@@ -8,13 +9,13 @@ public class ResultLabel extends JLabel {
 
     public ResultLabel(Result result) {
         updateResult(result);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
+        setForeground(Color.WHITE);
     }
 
     public ResultLabel() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
+        setForeground(Color.WHITE);
     }
 
     /**
