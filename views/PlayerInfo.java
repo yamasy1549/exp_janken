@@ -6,19 +6,18 @@ import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class PlayerInfo extends JPanel {
+public class PlayerInfo extends JJPanel {
 
     PlayerInfo(Player player) {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setOpaque(false);
+        super("PlayerInfo");
 
-        JLabel name = new JLabel(player.getName());
-        JLabel points = new JLabel(player.getPoints() + "pt");
+        String _name = player.getName();
+        if(_name.length() > 7) _name = _name.substring(0, 7) + "...";
+        JLabel name = new JJLabel(_name);
+        addAndSetBounds(name, 0, 120, 200, 30);
 
-        name.setForeground(Color.WHITE);
-        points.setForeground(Color.WHITE);
-
-        add(name);
-        add(points);
+        JLabel points = new JJLabel(player.getPoints() + "pt");
+        points.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        addAndSetBounds(points, 0, 150, 200, 30);
     }
 }

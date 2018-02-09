@@ -1,20 +1,20 @@
 package views;
 
+import java.awt.*;
 import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class ResultLabel extends JLabel {
+public class ResultLabel extends JJLabel {
 
-    public ResultLabel(Result result) {
+    ResultLabel(Result result) {
+        super(result.toString());
+
         updateResult(result);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setOpaque(false);
     }
 
     public ResultLabel() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setOpaque(false);
+        super("");
     }
 
     /**
@@ -22,7 +22,6 @@ public class ResultLabel extends JLabel {
      * @param result 手ごとのResult
      */
     public void updateResult(Result result) {
-        // デバッグ時見やすいように空白入れてるだけ
-        setText(result.toString() + " ");
+        setText(result.toString());
     }
 }

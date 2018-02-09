@@ -1,11 +1,15 @@
 package original;
 
+import java.awt.*;
 import java.util.*;
 
 public class Constants {
     public static final int JankenServerPort = 9999;
 
     public static final String DBDIR = "./db/";
+
+    public static final int CARD_WIDTH = 158;
+    public static final int CARD_HEIGHT = 192;
 
     public static final int HANDNUM = 5;
 
@@ -29,4 +33,8 @@ public class Constants {
         LOSE,
         DRAW
     }
+
+    public static final Color BLACK = new Color(23, 31, 38);
+    public static final Color WHITE = new Color(255, 255, 255);
+    public static final Color MINT = new Color(80, 171, 164);
 }

@@ -6,16 +6,17 @@ import javax.swing.*;
 import models.*;
 import static original.Constants.*;
 
-public class StartButton extends JButton {
+public class StartButton extends JJButton {
 
     private Player player1, player2;
 
     public StartButton(Player player1, Player player2) {
-        setText("スタート");
-        addActionListener(new startListener());
+        super("スタート");
 
         this.player1 = player1;
         this.player2 = player2;
+
+        addActionListener(new startListener());
     }
 
     public class startListener implements ActionListener {

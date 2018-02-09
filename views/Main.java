@@ -1,7 +1,6 @@
 package views;
 
 import javax.swing.*;
-import java.awt.event.*;
 import models.*;
 import static original.Constants.*;
 
@@ -20,17 +19,11 @@ public class Main extends JFrame {
         Computer computer = new Computer();
 
         // 配置
-        // TODO: レイアウト
-        JPanel panel = new JPanel();
-        panel.add(new PlayerArea(computer));
-        panel.add(new ResultArea(person, computer));
-        panel.add(new PlayerArea(person));
-        panel.add(new ControlArea(person, computer));
+        PlayPanel panel = new PlayPanel(person, computer);
+        add(panel);
 
-        this.add(panel);
-        setSize(1000, 700);
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1300, 700);
+        setVisible(true);
     }
 }

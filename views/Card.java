@@ -2,12 +2,14 @@ package views;
 
 import java.awt.*;
 import java.awt.datatransfer.*;
+import java.awt.event.*;
 import java.awt.dnd.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import static original.Constants.*;
 
-public class Card extends JLabel implements Transferable, DragGestureListener, DropTargetListener {
+public class Card extends JLabel implements Transferable, DragGestureListener, DropTargetListener, MouseListener {
 
     private Hand hand;
     private static final DataFlavor cardFlavor = new DataFlavor(Card.class, "Card");
@@ -19,7 +21,9 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
         setIcon(icon);
         setText(hand.toString());
         // 文字を隠す（他にやりようがありそう）
-        setFont(new java.awt.Font("", 1, 0));
+        setFont(new Font("", 1, 0));
+
+        addMouseListener(this);
 
         new DragSource().createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_MOVE, this);
         new DropTarget(this, DnDConstants.ACTION_MOVE, this);
@@ -83,6 +87,20 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
     public void open() {
         ImageIcon icon = new ImageIcon(imagePath(this.hand));
         setIcon(icon);
+    }
+
+    /**
+     * マウスホバー時の強調をつける
+     */
+    private void addHoverEffect() {
+        setBorder(new EmptyBorder(0, 0, 5, 0));
+    }
+
+    /**
+     * マウスホバー時の強調を外す
+     */
+    private void removeHoverEffect() {
+        setBorder(null);
     }
 
     /**
@@ -164,27 +182,59 @@ public class Card extends JLabel implements Transferable, DragGestureListener, D
      * DropTargetListenerの実装
      */
     @Override
-    public void dragEnter(DropTargetDragEvent dtde) {
-    }
+    public void dragEnter(DropTargetDragEvent dtde) { }
 
     /**
      * DropTargetListenerの実装
      */
     @Override
-    public void dragOver(DropTargetDragEvent dtde) {
-    }
+    public void dragOver(DropTargetDragEvent dtde) { }
 
     /**
      * DropTargetListenerの実装
      */
     @Override
-    public void dropActionChanged(DropTargetDragEvent dtde) {
-    }
+    public void dropActionChanged(DropTargetDragEvent dtde) { }
 
     /**
      * DropTargetListenerの実装
      */
     @Override
-    public void dragExit(DropTargetEvent dte) {
+    public void dragExit(DropTargetEvent dte) { }
+
+    /**
+     * MouseListenerの実装
+     */
+    @Override
+    public void mouseEntered(MouseEvent me) {
+        Card card = (Card)me.getSource();
+        card.addHoverEffect();
     }
+
+    /**
+     * MouseListenerの実装
+     */
+    @Override
+    public void mouseExited(MouseEvent me) {
+        Card card = (Card)me.getSource();
+        card.removeHoverEffect();
+    }
+
+    /**
+     * MouseListenerの実装
+     */
+    @Override
+    public void mouseClicked(MouseEvent me) { }
+
+    /**
+     * MouseListenerの実装
+     */
+    @Override
+    public void mousePressed(MouseEvent me) { }
+
+    /**
+     * MouseListenerの実装
+     */
+    @Override
+    public void mouseReleased(MouseEvent me) { }
 }
