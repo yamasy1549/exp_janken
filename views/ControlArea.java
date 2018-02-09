@@ -10,7 +10,10 @@ public class ControlArea extends JJPanel {
         super("ControlArea");
 
         HelpButton helpButton = new HelpButton();
-        addAndSetBounds(helpButton, 10, 470, 150, 80);
+        addAndSetBounds(helpButton, 10, 370, 150, 80);
+
+        RankingButton rankingButton = new RankingButton();
+        addAndSetBounds(rankingButton, 10, 470, 150, 80);
 
         StartButton startButton = new StartButton(player1, player2);
         addAndSetBounds(startButton, 10, 570, 150, 80);

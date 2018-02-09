@@ -1,58 +1,61 @@
 package views;
 
-import java.awt.event.*;
+import java.awt.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.table.*;
 import java.util.*;
+import java.util.Map.*;
+import java.util.stream.*;
 import static original.Constants.*;
 
 public class Ranking extends JFrame {
-    HashMap<String, Integer> map = new HashMap<String, Integer>();
+    private HashMap<String, Integer> entries = new HashMap<String, Integer>();
 
     Ranking() {
         setName("ランキング");
+
         JTable ranktable;
-        DefaultTableModel model;    
+        DefaultTableModel model;
 
-        readFile(); 
-        List<Entry<String, Integer>> list_entries = new ArrayList<Entry<String, Integer>>(map.entrySet()); // map.Entryのリストを作成する
-        Collections.sort(list_entries, new Comparator<Entry<String, Integer>>() {
-            public int compare(Entry<String, Integer> obj1, Entry<String, Integer> obj2)
-            {
-                return obj2.getValue().compareTo(obj1.getValue());
-            }
-        });
-        
-        private String[] columnNames = {"ランク", "プレーヤ", "点数"}; 
+        readFile();
 
-        
-        model = new DefaultTableModel(columnNames,0);
+        java.util.List<Entry<String, Integer>> sortedEntries = entries.entrySet()
+            .stream()
+            .sorted(Collections.reverseOrder(Entry.comparingByValue()))
+            .collect(Collectors.toList());
+
+
+        String[] columnNames = { "ランク", "プレーヤ", "点数" };
+
+        model = new DefaultTableModel(columnNames, 0);
         ranktable = new JTable(model);
 
-        int k = 1;
-        for(Entry<String, Integer> entry : list_entries){
-            model.addRow(new Object[]{k, entry.getKey(), entry.getValue()});
-            k++;
+        int rank = 1;
+        for (Entry<String, Integer> entry: sortedEntries) {
+            model.addRow(new Object[] { rank, entry.getKey(), entry.getValue() });
+            rank++;
         }
 
-        this.setSize(new Dimension(300,200));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(ranktable,BorderLayout.CENTER);
+        this.setSize(new Dimension(300, 200));
+        this.add(ranktable, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
+    // DBDIRから以下すべてのファイル名一覧を取得する
     private void readFile() {
         try {
-            // ../dbから以下すべてのファイル名一覧を取得する
-            File database = new File("../db");
+            File database = new File(DBDIR);
             String[] filenames = database.list();
-            for(String filename: filenames){
-                File file = new File(DBDIR + name);
+
+            // filenameがPlayer名
+            for(String filename: filenames) {
+                File file = new File(DBDIR + filename);
 
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String[] playerData = reader.readLine().split("\t");
-                int win = Integer.parseInt(playerData[0]); //WINの回数
-                map.put(filename, win); //ここにWINの回数
+                int winCount = Integer.parseInt(playerData[0]);
+                entries.put(filename, winCount);
 
                 reader.close();
             }
@@ -60,5 +63,4 @@ public class Ranking extends JFrame {
             System.out.println(ioe);
         }
     }
-
 }
