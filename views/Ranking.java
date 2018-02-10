@@ -31,40 +31,35 @@ public class Ranking extends JFrame {
 
         String[] columnNames = { "ランク", "プレーヤ", "点数" };
         Color colour = new Color(0, 0, 0, 0);
-        //Image image = new Image("./images/BACKGROUND.png");
 
         model = new DefaultTableModel(columnNames, 0);
-        ranktable = new JTable(model){{
-        setOpaque(false);
-        setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {{
-            setOpaque(false);
-        }});
-    }};
+        ranktable = new JTable(model);
+        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+        ranktable.getColumn("ランク").setCellRenderer(dtcr);
+        ranktable.getColumn("プレーヤ").setCellRenderer(dtcr);
+        ranktable.getColumn("点数").setCellRenderer(dtcr);
+        ranktable.setBackground(BLACK);
+        ranktable.setForeground(Color.WHITE);
+        ranktable.setGridColor(MINT);
+        ranktable.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        ranktable.setRowHeight(30);
+        ranktable.setOpaque(true);
+        JTableHeader header = ranktable.getTableHeader();
+        header.setBackground(BLACK);
+        header.setForeground(MINT);
+        header.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
 
-    this.add(new JScrollPane(ranktable) {{
-            setOpaque(false);
-            getViewport().setOpaque(false);
-        }
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            try {
-            BufferedImage background;
-            background = ImageIO.read(getClass().getResource("./images/BACKGROUND.png"));
-            g.drawImage(background, 0, 0, this);
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-
-        }});
+        JScrollPane sp = new JScrollPane(ranktable);
 
         int rank = 1;
         for (Entry<String, Integer> entry: sortedEntries) {
             model.addRow(new Object[] { rank, entry.getKey(), entry.getValue() });
             rank++;
         }
-
-        this.setSize(new Dimension(300, 200));
+        
+        this.add(sp,  BorderLayout.CENTER);
+        this.setSize(new Dimension(500, 300));
         this.setVisible(true);
     }
 
