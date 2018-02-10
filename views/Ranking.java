@@ -30,12 +30,26 @@ public class Ranking extends JFrame {
 
         model = new DefaultTableModel(columnNames, 0);
         ranktable = new JTable(model);
-
+        ranktable.setOpaque(false);
+        
         int rank = 1;
         for (Entry<String, Integer> entry: sortedEntries) {
             model.addRow(new Object[] { rank, entry.getKey(), entry.getValue() });
             rank++;
         }
+
+        JPanel rankpanel = new JPanel();
+        ImageIcon icon = new ImageIcon("../images/BACKGROUND.png");
+        JLabel background = new JLabel();
+        background.setIcon(icon);
+        rankpanel.add(ranktable);
+        rankpanel.setOpaque(false);
+        
+        this.setContentPane(background);
+        this.add(rankpanel, BorderLayout.CENTER);
+        this.setSize(new Dimension(300, 200));
+        this.setVisible(true);
+    }
 
         this.setSize(new Dimension(300, 200));
         this.add(ranktable, BorderLayout.CENTER);
