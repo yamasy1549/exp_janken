@@ -12,10 +12,11 @@ public class JJButton extends JButton implements MouseListener {
         super(text);
         setOpaque(true);
         setBorderPainted(false);
-        setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+        setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         setForeground(BLACK);
         setBackground(MINT);
 
+        removeHoverEffect();
         addMouseListener(this);
     }
 
