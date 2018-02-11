@@ -23,8 +23,10 @@ public class StartButton extends JJButton {
         public void actionPerformed(ActionEvent e) {
             Judge judge = new Judge();
 
-            Result playResult = judge.judgePlayers(player1, player2);
-            player1.allRecord(playResult);
+            Result playResult1 = judge.judgePlayers(player1, player2);
+            player1.allRecord(playResult1);
+            Result playResult2 = judge.judgePlayers(player2, player1);
+            player2.allRecord(playResult2);
 
             for(Component component : getParent().getParent().getComponents()) {
                 if(component.getName() == null) continue;
@@ -32,7 +34,7 @@ public class StartButton extends JJButton {
                 switch(component.getName()) {
                     case "ResultArea":
                         // Result表示を更新する
-                        ((ResultArea)component).updateResults(playResult);
+                        ((ResultArea)component).updateResults(playResult1);
                         break;
                     case "PlayerArea":
                         // Cardを全てopenにする
