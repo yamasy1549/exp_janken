@@ -13,7 +13,8 @@ public class HelpButton extends JJButton {
 
     public class helpListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // TODO: 遊び方を説明したウィンドウ表示
+            Help help = new Help();
+            help.setVisible(true);
         }
     }
 }

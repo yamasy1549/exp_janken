@@ -33,7 +33,6 @@ public class Ranking extends JFrame {
 
         add(sp, BorderLayout.CENTER);
         setSize(new Dimension(500, 300));
-        setVisible(true);
     }
 
     /**
