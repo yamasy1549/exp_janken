@@ -12,7 +12,7 @@ public class PlayerInfo extends JJPanel {
         super("PlayerInfo");
 
         String _name = player.getName();
-        if(_name.length() > 7) _name = _name.substring(0, 7) + "...";
+        if(_name.length() > 8) _name = _name.substring(0, 8) + "...";
         JLabel name = new JJLabel(_name);
         addAndSetBounds(name, 0, 120, 200, 30);
 
