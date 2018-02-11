@@ -2,86 +2,73 @@ package views;
 
 import java.awt.*;
 import java.io.*;
-import javax.imageio.*;
-import java.awt.image.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
-import java.util.Map.*;
-import java.util.stream.*;
 import java.io.IOException;
+import models.*;
 import static original.Constants.*;
 
 public class Ranking extends JFrame {
-    private HashMap<String, Integer> entries = new HashMap<String, Integer>();
 
     Ranking() {
         setName("ランキング");
 
-        JTable ranktable;
-        DefaultTableModel model;
-
-        readFile();
-
-        java.util.List<Entry<String, Integer>> sortedEntries = entries.entrySet()
-            .stream()
-            .sorted(Collections.reverseOrder(Entry.comparingByValue()))
-            .collect(Collectors.toList());
-
-
-        String[] columnNames = { "ランク", "プレーヤ", "点数" };
-        Color colour = new Color(0, 0, 0, 0);
-
-        model = new DefaultTableModel(columnNames, 0);
-        ranktable = new JTable(model);
-        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
-        ranktable.getColumn("ランク").setCellRenderer(dtcr);
-        ranktable.getColumn("プレーヤ").setCellRenderer(dtcr);
-        ranktable.getColumn("点数").setCellRenderer(dtcr);
-        ranktable.setBackground(BLACK);
-        ranktable.setForeground(Color.WHITE);
-        ranktable.setGridColor(MINT);
-        ranktable.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
-        ranktable.setRowHeight(30);
-        ranktable.setOpaque(true);
-        JTableHeader header = ranktable.getTableHeader();
-        header.setBackground(BLACK);
-        header.setForeground(MINT);
-        header.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-
-        JScrollPane sp = new JScrollPane(ranktable);
-
-        int rank = 1;
-        for (Entry<String, Integer> entry: sortedEntries) {
-            model.addRow(new Object[] { rank, entry.getKey(), entry.getValue() });
-            rank++;
+        // PlayerRate[]をrateで降順ソート
+        PlayerRate[] sortedEntries = sort(loadEntries());
+        String[][] rowData = new String[sortedEntries.length][3];
+        int i = 0;
+        for(PlayerRate playerRate: sortedEntries) {
+            String rank = Integer.toString(i+1);
+            String name = playerRate.getName();
+            String rate = Float.toString(playerRate.getRate());
+            String[] entry = { rank, name, rate };
+            rowData[i] = entry;
+            i++;
         }
-        
-        this.add(sp,  BorderLayout.CENTER);
-        this.setSize(new Dimension(500, 300));
-        this.setVisible(true);
+
+        String[] columnNames = { "順位", "プレーヤ", "勝率" };
+
+        RankingTable rankingTable = new RankingTable(rowData, columnNames);
+        JScrollPane sp = new JScrollPane(rankingTable);
+
+        add(sp, BorderLayout.CENTER);
+        setSize(new Dimension(500, 300));
+        setVisible(true);
     }
 
-    // DBDIRから以下すべてのファイル名一覧を取得する
-    private void readFile() {
+    private PlayerRate[] loadEntries() {
+        PlayerRate[] playerRates = new PlayerRate[1];
+
         try {
+            // DBDIR以下すべてのファイル名一覧を取得する
             File database = new File(DBDIR);
             String[] filenames = database.list();
 
-            // filenameがPlayer名
-            for(String filename: filenames) {
+            // Player名とwinCountをペアで持っておく
+            playerRates = new PlayerRate[filenames.length];
+
+            for(int i=0; i<filenames.length; i++) {
+                String filename = filenames[i];
                 File file = new File(DBDIR + filename);
 
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String[] playerData = reader.readLine().split("\t");
-                int winCount = Integer.parseInt(playerData[0]);
-                entries.put(filename, winCount);
+                // filenameがPlayer名
+                playerRates[i] = new PlayerRate(filename, playerData);
 
                 reader.close();
             }
         } catch(IOException ioe) {
             System.out.println(ioe);
         }
+
+        return playerRates;
+    }
+
+    private PlayerRate[] sort(PlayerRate[] array) {
+        PlayerRate[] sorted = array;
+        Arrays.sort(sorted);
+        return sorted;
     }
 }
