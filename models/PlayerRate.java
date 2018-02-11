@@ -28,6 +28,11 @@ public class PlayerRate implements Comparable {
         return this.rate;
     }
 
+    /**
+     * Comparableの実装
+     * @param another 比較したい他方のPlayerRate
+     * @return rateの大きい順にソートするようなint
+     */
     @Override
     public int compareTo(Object another) {
         float thisRate = this.rate;

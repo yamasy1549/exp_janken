@@ -10,12 +10,6 @@ public class RankingTable extends JTable {
     RankingTable(Object[][] rowData, Object[] columnNames) {
         super(rowData, columnNames);
 
-        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
-
-        for(String columnName: (String[])columnNames) {
-            getColumn(columnName).setCellRenderer(dtcr);
-        }
         setBackground(BLACK);
         setForeground(WHITE);
         setGridColor(GRAY);
@@ -23,6 +17,14 @@ public class RankingTable extends JTable {
         setRowHeight(40);
         setOpaque(true);
 
+        // 中央寄せ
+        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for(String columnName: (String[])columnNames) {
+            getColumn(columnName).setCellRenderer(dtcr);
+        }
+
+        // Header部分
         JTableHeader header = getTableHeader();
         header.setBackground(BLACK);
         header.setForeground(WHITE);

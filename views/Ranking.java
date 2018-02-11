@@ -2,10 +2,9 @@ package views;
 
 import java.awt.*;
 import java.io.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.util.*;
 import java.io.IOException;
+import javax.swing.*;
+import java.util.*;
 import models.*;
 import static original.Constants.*;
 
@@ -37,6 +36,10 @@ public class Ranking extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * DBDIRに保存されているPlayer情報から勝率を集計する
+     * @return 保存されているすべてのPlayerのPlayerRate
+     */
     private PlayerRate[] loadEntries() {
         PlayerRate[] playerRates = new PlayerRate[1];
 
@@ -66,6 +69,11 @@ public class Ranking extends JFrame {
         return playerRates;
     }
 
+    /**
+     * PlayerRateを非破壊ソートする
+     * @param array ソートしたいPlayerRateの配列
+     * @return ソート結果
+     */
     private PlayerRate[] sort(PlayerRate[] array) {
         PlayerRate[] sorted = array;
         Arrays.sort(sorted);
